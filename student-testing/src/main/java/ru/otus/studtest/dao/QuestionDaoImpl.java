@@ -21,6 +21,8 @@ import java.util.UUID;
 @Service
 public class QuestionDaoImpl implements QuestionDao {
 
+    private final static List<Question> questions = new ArrayList<>();
+    private static final int SKIP_COUNT_STRINGS = 1;  // skip the first line, header info
     private static final int INDEX_QUESTION = 0;
     private static final int INDEX_CORRECT_ANSWER = 1;
     private static final int INDEX_ANSWER_1 = 2;
@@ -28,28 +30,13 @@ public class QuestionDaoImpl implements QuestionDao {
     private static final int INDEX_ANSWER_3 = 4;
     private static final int INDEX_ANSWER_4 = 5;
     private static final int INDEX_ANSWER_5 = 6;
-    private static final int SKIP_COUNT_STRINGS = 1;  // skip the first line, header info
 
     @Value("${constants.questions}")
     private String fileCsvName;
-    private final List<Question> questions = new ArrayList<>();
 
-    private void createQuestions(List<String[]> stringsCsv) {
-        stringsCsv.forEach(
-                stringCsv -> {
-                    List<String> answers = new ArrayList<>(Arrays.asList(
-                            stringCsv[INDEX_ANSWER_1],
-                            stringCsv[INDEX_ANSWER_2],
-                            stringCsv[INDEX_ANSWER_3],
-                            stringCsv[INDEX_ANSWER_4],
-                            stringCsv[INDEX_ANSWER_5]));
-                    Question.of(
-                            UUID.randomUUID(),
-                            stringCsv[INDEX_QUESTION],
-                            Integer.parseInt(stringCsv[INDEX_CORRECT_ANSWER]),
-                            answers
-                    );
-                });
+    {
+        List<String[]> stringsCsv = parseStringsCsv(fileCsvName);
+        createQuestions(stringsCsv);
     }
 
     private List<String[]> parseStringsCsv(String fileCsvName) {
@@ -71,14 +58,30 @@ public class QuestionDaoImpl implements QuestionDao {
         return stringsCsv;
     }
 
-    {
-        List<String[]> stringsCsv = parseStringsCsv(fileCsvName);
-        createQuestions(stringsCsv);
+    private void createQuestions(List<String[]> stringsCsv) {
+        stringsCsv.forEach(
+                stringCsv -> {
+                    List<String> answers = new ArrayList<>(Arrays.asList(
+                            stringCsv[INDEX_ANSWER_1],
+                            stringCsv[INDEX_ANSWER_2],
+                            stringCsv[INDEX_ANSWER_3],
+                            stringCsv[INDEX_ANSWER_4],
+                            stringCsv[INDEX_ANSWER_5]));
+                    questions.add(Question.of(
+                            UUID.randomUUID(),
+                            stringCsv[INDEX_QUESTION],
+                            Integer.parseInt(stringCsv[INDEX_CORRECT_ANSWER]),
+                            answers
+                            )
+                    );
+                });
     }
 
     @Override
     public Question createQuestion(UUID questionId, String question, int correctAnswer, List<String> answers) {
-        return Question.of(questionId, question, correctAnswer, answers);
+        Question quest = Question.of(questionId, question, correctAnswer, answers);
+        questions.add(quest);
+        return quest;
     }
 
     @Override
