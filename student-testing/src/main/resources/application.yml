@@ -1,0 +1,9 @@
+application:
+  name: studtest
+
+constants:
+  questions: classpath:/questions.csv
+
+logging:
+  level:
+    root: INFO
