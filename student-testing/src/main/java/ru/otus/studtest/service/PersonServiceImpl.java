@@ -12,8 +12,22 @@ import java.util.Optional;
 public class PersonServiceImpl implements PersonService {
 
     private final PersonDao personDao;
+    private final IOService ioService;
 
     public Optional<Person> getByName(String name) {
         return personDao.findByName(name);
+    }
+
+    @Override
+    public Person createPerson(String firstname, String lastname) {
+        return personDao.createPerson(firstname, lastname);
+    }
+
+    @Override
+    public Person createPersonFromIO() {
+        return createPerson(
+                ioService.readStringWithPrompt("\nYour firstname: "),
+                ioService.readStringWithPrompt("Your lastname: ")
+        );
     }
 }

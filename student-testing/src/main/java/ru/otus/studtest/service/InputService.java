@@ -10,5 +10,5 @@ public interface InputService {
      * @param prompt
      * @return
      */
-    String readStringWithPrompt(String prompt);
+    String readStringWithPrompt(String prompt);  // TODO: добавить валидацию
 }

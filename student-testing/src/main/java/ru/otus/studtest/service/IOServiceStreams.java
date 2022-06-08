@@ -1,6 +1,7 @@
 package ru.otus.studtest.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
@@ -8,6 +9,7 @@ import java.util.Scanner;
 
 @Service
 @RequiredArgsConstructor
+@Lazy
 public class IOServiceStreams implements IOService {
 
     private final PrintStream output;

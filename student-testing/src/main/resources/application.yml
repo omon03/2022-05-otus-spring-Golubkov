@@ -1,8 +1,9 @@
 application:
   name: studtest
 
-constants:
-  questions: classpath:/questions.csv
+questions:
+  file-csv: classpath:/questions.csv
+  the-number-of-correct-answers-for-credit: 3
 
 logging:
   level:

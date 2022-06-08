@@ -5,9 +5,11 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
+import ru.otus.studtest.config.ConfigProperties;
 import ru.otus.studtest.dto.Question;
 
 import java.io.FileReader;
@@ -31,14 +33,13 @@ public class QuestionDaoImpl implements QuestionDao {
     private static final int INDEX_ANSWER_4 = 5;
     private static final int INDEX_ANSWER_5 = 6;
 
-    @Value("${constants.questions}")
-    private String fileCsvName;
-
-    {
-        List<String[]> stringsCsv = parseStringsCsv(fileCsvName);
+    public QuestionDaoImpl(@NotNull ConfigProperties configProperties) {
+        List<String[]> stringsCsv = parseStringsCsv(configProperties.getFileCsv());
         createQuestions(stringsCsv);
     }
 
+
+    // TODO: можно вынести в отдельный парсер
     private List<String[]> parseStringsCsv(String fileCsvName) {
         List<String[]> stringsCsv = new ArrayList<>();
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build(); // custom separator

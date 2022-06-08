@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface PersonService {
 
     Optional<Person> getByName(String name);
+    Person createPerson(String firstname, String lastname);
+    Person createPersonFromIO();
 
 }
