@@ -28,7 +28,12 @@ public class IOServiceStreams implements IOService {
     @Override
     public int readIntWithPrompt(String prompt) {
         outputString(prompt);
-        return Integer.parseInt(input.nextLine());
+        try {
+            return Integer.parseInt(input.nextLine());
+        } catch (NumberFormatException e) {
+            outputString("Enter the answer number in numbers!\n");
+            return readIntWithPrompt(prompt);
+        }
     }
 
     @Override
