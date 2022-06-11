@@ -1,19 +1,19 @@
 package ru.otus.studtest.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
+
+@Slf4j
 @Service
-@RequiredArgsConstructor
-@Lazy
 public class IOServiceStreams implements IOService {
 
-    private final PrintStream output;
-    private final Scanner input;
+    private static final PrintStream output = System.out;
+    private static final Scanner input = new Scanner(System.in);;
+
 
     @Override
     public int readInt() {
@@ -22,7 +22,7 @@ public class IOServiceStreams implements IOService {
 
     @Override
     public void outputString(String s) {
-        output.println(s);
+        output.print(s);
     }
 
     @Override

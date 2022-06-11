@@ -5,9 +5,9 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import ru.otus.studtest.config.ConfigProperties;
 import ru.otus.studtest.dto.Question;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -34,23 +35,26 @@ public class QuestionDaoImpl implements QuestionDao {
     private static final int INDEX_ANSWER_5 = 6;
 
     public QuestionDaoImpl(@NotNull ConfigProperties configProperties) {
+        log.debug("File name: " + configProperties.getFileCsv());
         List<String[]> stringsCsv = parseStringsCsv(configProperties.getFileCsv());
+        log.debug("stringsCsv: " + stringsCsv.toString());
         createQuestions(stringsCsv);
+        log.debug("questions: " + questions.toString());
     }
 
 
-    // TODO: можно вынести в отдельный парсер
+    // TODO: вынести в отдельный парсер
     private List<String[]> parseStringsCsv(String fileCsvName) {
         List<String[]> stringsCsv = new ArrayList<>();
-        CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build(); // custom separator
+        CSVParser csvParser = new CSVParserBuilder().withSeparator(',').build(); // custom separator
+        ClassPathResource resource = new ClassPathResource(fileCsvName);
 
-        try (CSVReader reader = new CSVReaderBuilder(
-                new FileReader(fileCsvName))
-                .withCSVParser(csvParser)   // custom CSV parser
-                .withSkipLines(SKIP_COUNT_STRINGS)
-                .build()) {
+        try (CSVReader reader = new CSVReaderBuilder(new FileReader(resource.getFile()))
+                                            .withCSVParser(csvParser)   // custom CSV parser
+                                            .withSkipLines(SKIP_COUNT_STRINGS)
+                                            .build()) {
             stringsCsv = reader.readAll();
-            log.info("Read questions in CSV file: " + stringsCsv.size());
+            log.debug("Read questions in CSV file: " + stringsCsv.size());
 //            stringsCsv.forEach(x -> System.out.println(Arrays.toString(x)));
         } catch (IOException | CsvException e) {
             e.printStackTrace();
@@ -68,6 +72,7 @@ public class QuestionDaoImpl implements QuestionDao {
                             stringCsv[INDEX_ANSWER_3],
                             stringCsv[INDEX_ANSWER_4],
                             stringCsv[INDEX_ANSWER_5]));
+
                     questions.add(Question.of(
                             UUID.randomUUID(),
                             stringCsv[INDEX_QUESTION],
