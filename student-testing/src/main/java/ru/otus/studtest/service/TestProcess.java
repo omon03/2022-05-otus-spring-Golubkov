@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.otus.studtest.config.ConfigProperties;
 import ru.otus.studtest.dto.Person;
@@ -25,6 +26,7 @@ public class TestProcess implements CommandLineRunner {
     private QuestionConverter questionConverter;
     private IOService ioService;
     private ConfigProperties configProperties;
+    private MessageSource messageSource;
 
     private Map<Question, Integer> questionsAnswers;
 
