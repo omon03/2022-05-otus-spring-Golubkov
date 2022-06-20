@@ -11,6 +11,7 @@ import ru.otus.studtest.dto.Person;
 import ru.otus.studtest.dto.Question;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -41,15 +42,13 @@ public class TestProcess implements CommandLineRunner {
         questions.forEach(q -> questionsAnswers.put(q, askQuestion(q)));
         int resultTest = getResultTest(questionsAnswers);
         if (resultTest >= theNumberOfCorrectAnswersForCredit) {
-            ioService.outputString(String.format("\nYou passed the test.\n" +
-                    "Congratulations!\n" +
-                    "There are %d correct answers with a minimum number of %d.\n",
+            ioService.outputString(String.format(
+                    messageSource.getMessage("you_passed_the_test", null, Locale.getDefault()),
                     resultTest,
                     theNumberOfCorrectAnswersForCredit));
         } else {
-            ioService.outputString(String.format("\nYou didn't pass the test.\n" +
-                    "Please try again later.\n" +
-                    "There are %d correct answers with a minimum number of %d.\n",
+            ioService.outputString(String.format(
+                    messageSource.getMessage("you_didnt_pass_the_test", null, Locale.getDefault()),
                     resultTest,
                     theNumberOfCorrectAnswersForCredit));
         }
@@ -57,7 +56,7 @@ public class TestProcess implements CommandLineRunner {
 
     private int askQuestion(Question question) {
         ioService.outputString(questionConverter.convertQuestionToString(question));
-        return ioService.readIntWithPrompt("Your answer: ");
+        return ioService.readIntWithPrompt(messageSource.getMessage("your_answer", null, Locale.getDefault()));
     }
 
     private boolean checkAnswer(Question question, int answer) {
