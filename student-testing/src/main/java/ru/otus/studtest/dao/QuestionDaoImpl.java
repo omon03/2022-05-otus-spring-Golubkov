@@ -8,6 +8,7 @@ import com.opencsv.exceptions.CsvException;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.otus.studtest.config.ConfigProperties;
 import ru.otus.studtest.dto.Question;
@@ -21,10 +22,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
+@Component
 public class QuestionDaoImpl implements QuestionDao {
 
-    private final static List<Question> questions = new ArrayList<>();
+    private final List<Question> questions = new ArrayList<>();
     private static final int SKIP_COUNT_STRINGS = 1;  // skip the first line, header info
     private static final int INDEX_QUESTION = 0;
     private static final int INDEX_CORRECT_ANSWER = 1;
@@ -39,7 +40,7 @@ public class QuestionDaoImpl implements QuestionDao {
         List<String[]> stringsCsv = parseStringsCsv(configProperties.getFileCsv());
         log.debug("stringsCsv: " + stringsCsv.toString());
         createQuestions(stringsCsv);
-        log.debug("questions: " + questions.toString());
+        log.debug("questions: " + questions);
     }
 
 
@@ -55,7 +56,6 @@ public class QuestionDaoImpl implements QuestionDao {
                                             .build()) {
             stringsCsv = reader.readAll();
             log.debug("Read questions in CSV file: " + stringsCsv.size());
-//            stringsCsv.forEach(x -> System.out.println(Arrays.toString(x)));
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }

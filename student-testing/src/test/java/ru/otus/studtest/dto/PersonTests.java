@@ -3,13 +3,14 @@ package ru.otus.studtest.dto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.studtest.dto.Person;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 @DisplayName("Класс Person")
 class PersonTests {
 
@@ -19,13 +20,11 @@ class PersonTests {
         UUID uuid = UUID.randomUUID();
         String firstName = "Ivan";
         String lastName = "Petrov";
-        int age = 42;
 
-        Person person = new Person(uuid, firstName, lastName, age);
+        Person person = new Person(uuid, firstName, lastName);
 
         assertEquals(firstName, person.getFirstName());
         assertEquals(lastName, person.getLastName());
-        assertEquals(age, person.getAge());
     }
 
 }

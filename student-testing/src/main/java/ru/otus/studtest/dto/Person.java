@@ -12,6 +12,5 @@ public class Person {
     private UUID uuID;
     private String firstName;
     private String lastName;
-    private int age;
 
 }

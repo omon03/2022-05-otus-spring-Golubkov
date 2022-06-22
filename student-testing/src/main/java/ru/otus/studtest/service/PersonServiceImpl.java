@@ -17,10 +17,6 @@ public class PersonServiceImpl implements PersonService {
     private final IOService ioService;
     private final MessageSource messageSource;
 
-    public Optional<Person> getByName(String name) {
-        return personDao.findByName(name);
-    }
-
     @Override
     public Person createPerson(String firstname, String lastname) {
         return personDao.createPerson(firstname, lastname);

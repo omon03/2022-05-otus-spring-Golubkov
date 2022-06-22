@@ -16,7 +16,6 @@ import java.util.Scanner;
 @Setter
 @Component
 @ConfigurationProperties("questions")
-@Configuration
 @RequiredArgsConstructor
 public class ConfigProperties {
 

@@ -10,6 +10,7 @@ import ru.otus.studtest.config.ConfigProperties;
 import ru.otus.studtest.dto.Person;
 import ru.otus.studtest.dto.Question;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -18,24 +19,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @Service
 @AllArgsConstructor
-@Setter
-public class TestProcess implements CommandLineRunner {
+public class TestProcessor {
 
-    private PersonService personService;
-    private PersonConverter personConverter;
-    private QuestionService questionService;
-    private QuestionConverter questionConverter;
-    private IOService ioService;
-    private ConfigProperties configProperties;
-    private MessageSource messageSource;
-
-    private Map<Question, Integer> questionsAnswers;
+    private final PersonService personService;
+    private final PersonConverter personConverter;
+    private final QuestionService questionService;
+    private final QuestionConverter questionConverter;
+    private final IOService ioService;
+    private final ConfigProperties configProperties;
+    private final MessageSource messageSource;
 
 
-    @Override
-    public void run(String... args) {
+
+
+    public void testing() {
+        final Map<Question, Integer> questionsAnswers = new HashMap<>();
+        final List<Question> questions = questionService.getAllQuestions();
         int theNumberOfCorrectAnswersForCredit = configProperties.getTheNumberOfCorrectAnswersForCredit();
-        List<Question> questions = questionService.getAllQuestions();
         Person student = personService.createPersonFromIO();
         log.info("Create object Person: " + personConverter.convertPersonToString(student));
 
