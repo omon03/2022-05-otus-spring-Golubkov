@@ -9,5 +9,6 @@ public interface QuestionDao {
 
     Question createQuestion(UUID questionId, String question, int correctAnswer, List<String> answers);
     List<Question> getAllQuestions();
+    void setAllQuestions(List<Question> questions);
 
 }

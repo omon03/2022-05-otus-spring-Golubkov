@@ -1,6 +1,7 @@
 package ru.otus.studtest.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
@@ -11,9 +12,15 @@ import java.util.Scanner;
 @Service
 public class IOServiceStreams implements IOService {
 
-    private static final PrintStream output = System.out;
-    private static final Scanner input = new Scanner(System.in);;
+    private final PrintStream output;
+    private final Scanner input;
 
+
+    public IOServiceStreams(@Value("#{T(java.lang.System).out}") PrintStream output,
+                            @Value("#{T(java.lang.System).in}") Scanner input) {
+        this.output = output;
+        this.input = input;
+    }
 
     @Override
     public int readInt() {
