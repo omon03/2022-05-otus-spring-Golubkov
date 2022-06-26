@@ -65,7 +65,7 @@ public class QuestionServiceCsv implements QuestionService{
     private List<Question> parseQuestions(List<String[]> stringsCsv) {
         final List<Question> questions = new ArrayList<>();
         stringsCsv.forEach(
-            stringCsv -> questions.add(Question.of(
+            stringCsv -> questions.add(new Question(
                         UUID.randomUUID(),
                         stringCsv[INDEX_QUESTION],
                         Integer.parseInt(stringCsv[INDEX_CORRECT_ANSWER]),

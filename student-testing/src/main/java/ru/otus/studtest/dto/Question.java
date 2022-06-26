@@ -1,14 +1,13 @@
 package ru.otus.studtest.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
 
 import java.util.List;
 import java.util.UUID;
 
 @Data
-@RequiredArgsConstructor(staticName="of")
+@AllArgsConstructor
 public class Question {
 
     private UUID questionId;

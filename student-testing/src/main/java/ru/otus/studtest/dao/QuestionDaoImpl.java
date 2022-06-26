@@ -16,7 +16,7 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public Question createQuestion(UUID questionId, String question, int correctAnswer, List<String> answers) {
-        Question quest = Question.of(questionId, question, correctAnswer, answers);
+        Question quest = new Question(questionId, question, correctAnswer, answers);
         questions.add(quest);
         return quest;
     }
