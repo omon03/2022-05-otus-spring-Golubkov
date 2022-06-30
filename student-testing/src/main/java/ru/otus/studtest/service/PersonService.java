@@ -7,6 +7,5 @@ import java.util.Optional;
 public interface PersonService {
 
     Person createPerson(String firstname, String lastname);
-    Person createPersonFromIO();
 
 }

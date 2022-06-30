@@ -22,11 +22,4 @@ public class PersonServiceImpl implements PersonService {
         return personDao.createPerson(firstname, lastname);
     }
 
-    @Override
-    public Person createPersonFromIO() {
-        return createPerson(
-                ioService.readStringWithPrompt(messageSource.getMessage("your_firstname", null, Locale.getDefault())),
-                ioService.readStringWithPrompt(messageSource.getMessage("your_lastname", null, Locale.getDefault()))
-        );
-    }
 }

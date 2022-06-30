@@ -36,7 +36,7 @@ public class TestProcessor {
         final Map<Question, Integer> questionsAnswers = new HashMap<>();
         final List<Question> questions = questionService.getAllQuestions();
         int theNumberOfCorrectAnswersForCredit = configProperties.getTheNumberOfCorrectAnswersForCredit();
-        Person student = personService.createPersonFromIO();
+        Person student = createPersonFromIO();
         log.info("Create object Person: " + personConverter.convertPersonToString(student));
 
         questions.forEach(q -> questionsAnswers.put(q, askQuestion(q)));
@@ -72,4 +72,12 @@ public class TestProcessor {
         });
         return result.get();
     }
+
+    private Person createPersonFromIO() {
+        return personService.createPerson(
+                ioService.readStringWithPrompt(messageSource.getMessage("your_firstname", null, Locale.getDefault())),
+                ioService.readStringWithPrompt(messageSource.getMessage("your_lastname", null, Locale.getDefault()))
+        );
+    }
+
 }

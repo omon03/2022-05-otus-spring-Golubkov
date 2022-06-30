@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -17,9 +18,9 @@ public class IOServiceStreams implements IOService {
 
 
     public IOServiceStreams(@Value("#{T(java.lang.System).out}") PrintStream output,
-                            @Value("#{T(java.lang.System).in}") Scanner input) {
+                            @Value("#{T(java.lang.System).in}") InputStream input) {
         this.output = output;
-        this.input = input;
+        this.input = new Scanner(input);
     }
 
     @Override
