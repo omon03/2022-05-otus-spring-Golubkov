@@ -1,0 +1,14 @@
+application:
+  name: studtest
+
+questions:
+  file-csv: questions.csv
+  the-number-of-correct-answers-for-credit: 3
+
+logging:
+  level:
+    root: INFO
+
+spring:
+  main:
+    web-application-type: none
